@@ -1,0 +1,76 @@
+<!--Template for displaying meal information views/index.ejs. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Random Meal App</title>
+</head>
+<body>
+<div class="container">
+    <div class="border-animation"></div>
+    <!-- Your existing container content here -->
+
+
+    <div class="row text-center">
+        <h3 class="text">Feeling hungry?</h3>
+        <h5 class="text">Get a random meal by clicking below</h5>
+        <form action="/get-meal" method="get">
+            <a href="/get-meal" class="codepen-button">
+                <span>Get Meal 🍔</span>
+            </a>
+
+
+
+        </form>
+    </div>
+    <% if (meal) { %>
+        <div class="row meal">
+            <div class="columns five">
+                <img src="<%= meal.strMealThumb %>" alt="Meal Image">
+                <% if (meal.strCategory) { %>
+                    <p><strong>Category:</strong> <%= meal.strCategory %></p>
+                <% } %>
+                <% if (meal.strArea) { %>
+                    <p><strong>Area:</strong> <%= meal.strArea %></p>
+                <% } %>
+                <% if (meal.strTags) { %>
+                    <p><strong>Tags:</strong> <%= meal.strTags.split(',').join(', ') %></p>
+                <% } %>
+                <h5>Ingredients:</h5>
+                <ul>
+                    <% for (let i = 1; i <= 20; i++) { %>
+                        <% if (meal[`strIngredient${i}`]) { %>
+                            <li><%= meal[`strIngredient${i}`] %> - <%= meal[`strMeasure${i}`] %></li>
+                        <% } else { %>
+                            <% break; %>
+                        <% } %>
+                    <% } %>
+                </ul>
+            </div>
+            <div class="columns seven">
+                <h4><%= meal.strMeal %></h4>
+                <p><%= meal.strInstructions %></p>
+            </div>
+        </div>
+        <% if (meal.strYoutube) { %>
+            <div class="row">
+                <h5 class="text">Video Recipe</h5>
+                <div class="videoWrapper">
+                    <iframe width="420" height="315" src="https://www.youtube.com/embed/<%= meal.strYoutube.slice(-11) %>"></iframe>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
